@@ -131,6 +131,7 @@ def processItem(item):
 
 
 def process(text):
+    text = '\n' + text
     l = []
     currentItem = ''
     step = 0
@@ -151,8 +152,8 @@ def process(text):
 def printl():   #just a debug method
     print('\n--------------------------------\n'.join(l))
 
-def openfile():
-    x = open("quests.txt",mode = "r", encoding = 'utf-8')
+def openfile(filename):
+    x = open(filename ,mode = "r", encoding = 'utf-8')
 
     text = x.read()
     x.close()

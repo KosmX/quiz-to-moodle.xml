@@ -1,0 +1,24 @@
+1. Why we need example files?
+(A) because we like them
+(B) becouse I can't type correctly
+(C) to make clear, how should it look like
+(D) 42
+C
+
+2. Can I write the question
+in multiple lines?
+☺
+☻
+(A) NO
+(B) Yes
+(C) Not sure
+(D) Maybe
+B
+
+3. What is the source's correct encoding?
+
+(A) ASCII
+(B) ANSI
+(C) windows-2345
+(D) UTF-8
+D
