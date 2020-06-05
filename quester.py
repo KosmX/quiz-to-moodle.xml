@@ -1,10 +1,5 @@
-x = open("quests.txt",mode = "r", encoding = 'utf-8')
 
-text = x.read()
-x.close()
-
-
-def formatQuestion(quest, answers, answer):
+def formatQuestion(quest, answers, answer): #quest:description of the question, answers: string containing answers, answer:string containing the answer letter e.g. "D"
     return '''
 <question type="multichoice">
     <name>
@@ -18,8 +13,8 @@ def formatQuestion(quest, answers, answer):
 </question>
 '''.format(quest.split('\n')[0], '&emsp;'.join('<br>'.join(quest.split('\n')).split('\t')), answers)[1:] #remove first \n
 #asd
-
-def formatAnswer(answer, isCorrect):
+#will run on every answer, answer:answer text, isCorrect: is this the correct answer
+def formatAnswer(answer, isCorrect):    #answer
     if isCorrect:
         a = '100'
     else:
@@ -31,26 +26,30 @@ def formatAnswer(answer, isCorrect):
 #asd
 
 
+def save(filename, l):
+    x = open(filename, mode='w', encoding='utf-8')
+    x.write('''<?xml version="1.0" ?>
+<quiz>
+{}
+</quiz>'''.format(''.join(l)))
+    x.close()
+    
 
-l = []
-currentItem = ''
 
-step = 0
-q = 1
 def isNumber(c):
     return(c == '0' or c == '1' or c == '2' or c == '3' or c == '4' or c == '5' or c == '6' or c == '7' or c == '8' or c == '9')
 
-def isNumEnd(i):
+def isNumEnd(text, i):
     return(text[i] == '.' and (text[i+1] == '\t' or text[i+1] == ' '))
 
-def isNewQuestion(i):
+def isNewQuestion(text, i, q):
     if (text[i] == '\n' and i+4 < len(text)):
         try:
             if(q < 10):
-                if(int(text[i+1]) == q and isNumEnd(i+2)):
+                if(int(text[i+1]) == q and isNumEnd(text, i+2)):
                     return(4)
             else:
-                if(int(text[i+1:i+3]) == q and isNumEnd(i+3)):
+                if(int(text[i+1:i+3]) == q and isNumEnd(text, i+3)):
                     return(5)
         except:
             return(0)
@@ -131,26 +130,51 @@ def processItem(item):
     #return('{}\n\n{}\nANSWER: {}'.format(item[:i+1], '\n'.join(answers), answer))
 
 
-while step < len(text):
-    if(bool(isNewQuestion(step))):
-        if (len(currentItem) != 0):
-            l = l + [processItem(currentItem)]
-        currentItem = ''
-        step += isNewQuestion(step)
-        q += 1
-    else:
-        currentItem = currentItem + text[step]
-        step += 1
-l = l + [processItem(currentItem)]
+def process(text):
+    l = []
+    currentItem = ''
+    step = 0
+    q = 1
+    while step < len(text):
+        if(bool(isNewQuestion(text, step, q))):
+            if (len(currentItem) != 0):
+                l = l + [processItem(currentItem)]
+            currentItem = ''
+            step += isNewQuestion(text, step, q)
+            q += 1
+        else:
+            currentItem = currentItem + text[step]
+            step += 1
+    l = l + [processItem(currentItem)]
+    return l
 
 def printl():   #just a debug method
     print('\n--------------------------------\n'.join(l))
 
-def save(filename):
-    x = open(filename, mode='w', encoding='utf-8')
-    x.write('''<?xml version="1.0" ?>
-<quiz>
-{}
-</quiz>'''.format(''.join(l)))
+def openfile():
+    x = open("quests.txt",mode = "r", encoding = 'utf-8')
+
+    text = x.read()
     x.close()
-    
+    return text
+
+if __name__ == "__main__":
+    sc = True
+    while sc:
+        try:
+            x = open(input("UTF-8 encoded file name with extension e.g. quests.txt\n"), mode = 'r', encoding = 'utf-8')
+            t = x.read()
+            x.close()
+            sc = False
+        except:
+            print('wrong filename or encoding')
+    l = process(t)
+    sc = True
+    while sc:
+        try:
+            save(input('export file name e.g. quests.xml\nWARNING, this file will be owerwrited\n'), l)
+            sc = False
+        except:
+            print('unexcepted error')
+
+
