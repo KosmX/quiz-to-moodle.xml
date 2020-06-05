@@ -1,6 +1,6 @@
 ## txt quiz file to n=moodle xml converter
 
-source file:
+source like this:
 
     1. <question 
     text> #you can break the question's description
