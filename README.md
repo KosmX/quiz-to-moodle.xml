@@ -1,4 +1,4 @@
-## txt quiz file to n=moodle xml converter
+## txt quiz file to moodle-xml converter
 
 source like this:
 
