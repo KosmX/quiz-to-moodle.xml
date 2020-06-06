@@ -7,6 +7,7 @@
     <questiontext format="html">
         <text><![CDATA[Why we need example files?]]></text>
     </questiontext>
+    <shuffleanswers>true</shuffleanswers>
     <answernumbering>none</answernumbering>
         <answer fraction="0">
         <text>because we like them</text>
@@ -28,6 +29,7 @@
     <questiontext format="html">
         <text><![CDATA[Can I write the question<br>in multiple lines?<br>☺<br>☻]]></text>
     </questiontext>
+    <shuffleanswers>true</shuffleanswers>
     <answernumbering>none</answernumbering>
         <answer fraction="0">
         <text>NO</text>
@@ -49,6 +51,7 @@
     <questiontext format="html">
         <text><![CDATA[What is the source's correct encoding?]]></text>
     </questiontext>
+    <shuffleanswers>true</shuffleanswers>
     <answernumbering>none</answernumbering>
         <answer fraction="0">
         <text>ASCII</text>

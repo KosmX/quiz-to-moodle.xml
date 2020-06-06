@@ -8,10 +8,11 @@ def formatQuestion(quest, answers, answer): #quest:description of the question, 
     <questiontext format="html">
         <text><![CDATA[{}]]></text>
     </questiontext>
+    <shuffleanswers>true</shuffleanswers>
     <answernumbering>none</answernumbering>
     {}
 </question>
-'''.format(quest.split('\n')[0], '&emsp;'.join('<br>'.join(quest.split('\n')).split('\t')), answers)[1:] #remove first \n
+'''.format(quest.split('\n')[0], '&nbsp;'.join('&emsp;'.join('<br>'.join(quest.split('\n')).split('\t')).split(' ')), answers)[1:] #remove first \n
 #asd
 #will run on every answer, answer:answer text, isCorrect: is this the correct answer
 def formatAnswer(answer, isCorrect):    #answer
@@ -116,6 +117,8 @@ def processItem(item):
             if item[i] == '\n':
                 item = '{} {}'.format(item[:i], item[i+1])
             i -= 1
+        if answerLetter.get() == "X":
+            print('WARNING, cannot find correct answer:\n{}'.format(item))
         answers = [formatAnswer(item[i+1:answerEnd], answerLetter.get() == answer)] + answers   
         #answers = ['{}. {}'.format(answerLetter.get(), item[i+1:answerEnd])] + answers
         i -= 4
@@ -132,6 +135,8 @@ def processItem(item):
 
 def process(text):
     text = '\n' + text
+    while text[1] == '\n':
+        text = text[1:]
     l = []
     currentItem = ''
     step = 0
